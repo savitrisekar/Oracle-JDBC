@@ -23,7 +23,7 @@ import tools.DBConnection;
 public class EmployeeView extends javax.swing.JFrame {
 
     DBConnection connection = new DBConnection();
-    EmployeeController iec = new EmployeeController((EmployeeDAO) connection.getConnection());
+    IEmployeeController iec = new EmployeeController(connection.getConnection());
 
     /**
      * Creates new form EmployeeUI

@@ -37,10 +37,10 @@ public class OJDB {
         System.out.println(connection.getConnection());
         
           //manual test dao update
-        IEmployeeDAO irdao = new EmployeeDAO(connection.getConnection());
-        Employee employee1 = new Employee(207, "William B.", "Fay", "FAYW", 
-                "515.123.4567", "13-01-2001", "IT_PROG", 9000, (float) 0.4, 103, 90);
-        System.out.println(irdao.update(employee1));
+//        IEmployeeDAO irdao = new EmployeeDAO(connection.getConnection());
+//        Employee employee1 = new Employee(207, "William B.", "Fay", "FAYW", 
+//                "515.123.4567", "13-01-2001", "IT_PROG", 9000, (float) 0.4, 103, 90);
+//        System.out.println(irdao.update(employee1));
 
         //manual test dao insert
 //        IEmployeeDAO irdao = new EmployeeDAO(connection.getConnection());
@@ -48,15 +48,23 @@ public class OJDB {
 //                "515.123.4567", "13-01-2001", "IT_PROG", 9000, (float) 0.4, 103, 90);
 //        System.out.println(irdao.insert(employee1));
 
-//        IEmployeeDAO mIrdao = new EmployeeDAO(connection.getConnection());
-//        for (Employee employee2 : mIrdao.search("A")) {
+        IEmployeeDAO mIrdao = new EmployeeDAO(connection.getConnection());
+//        for (Employee employee2 : mIrdao.search(100)) {
 //            System.out.println(employee2.getId());
 //            System.out.println(employee2.getFirstName());
 //            System.out.println(employee2.getEmail());
 //            System.out.println(employee2.getHire());
 //            System.out.println(employee2.getSalary());
 //        }
-
+//        for (Employee employee2 : mIrdao.getById(999)) {
+//            System.out.println(employee2.getId());
+//            System.out.println(employee2.getFirstName());
+//            System.out.println(employee2.getEmail());
+//            System.out.println(employee2.getHire());
+//            System.out.println(employee2.getSalary());
+//        }
+          System.out.println(mIrdao.delete(207));
+        
         //manual test getAll
 //        IEmployeeDAO mIrdao = new EmployeeDAO(connection.getConnection());
 //        for (Employee employee2 : mIrdao.getAll()) {
