@@ -5,17 +5,103 @@
  */
 package views;
 
+import controllers.EmployeeController;
+import controllers.icontrollers.IEmployeeController;
+import daos.EmployeeDAO;
+import daos.idaos.IEmployeeDAO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Employee;
+import tools.DBConnection;
+
 /**
  *
  * @author Sekar Ayu Safitri
  */
 public class EmployeeView extends javax.swing.JFrame {
 
+    DBConnection connection = new DBConnection();
+    EmployeeController iec = new EmployeeController((EmployeeDAO) connection.getConnection());
+
     /**
      * Creates new form EmployeeUI
      */
     public EmployeeView() {
         initComponents();
+        showTableEmployee();
+    }
+
+    private void showTableEmployee() {
+        tId.setText(" ");
+        tFirstName.setText(" ");
+        tLastName.setText(" ");
+        tEmail.setText(" ");
+        tTelepon.setText(" ");
+        tTanggal.setText(" ");
+        tIDPekerjaan.setText(" ");
+        tMoney.setText(" ");
+        tTambahan.setText(" ");
+        tManager.setText(" ");
+        tDepartment.setText(" ");
+    }
+
+    public void ShowtableEmployee() {
+        DefaultTableModel model = (DefaultTableModel) tData.getModel();
+        Object[] row = new Object[11];
+        List<Employee> Employee = new ArrayList<>();
+        Employee = iec.getAll();
+        for (int i = 0; i < Employee.size(); i++) {
+            row[0] = Employee.get(i).getId();
+            row[1] = Employee.get(i).getFirstName();
+            row[2] = Employee.get(i).getLastName();
+            row[3] = Employee.get(i).getEmail();
+            row[4] = Employee.get(i).getPhoneNumber();
+            row[5] = Employee.get(i).getHire();
+            row[6] = Employee.get(i).getJobId();
+            row[7] = Employee.get(i).getSalary();
+            row[8] = Employee.get(i).getCommission();
+            row[9] = Employee.get(i).getManagerId();
+            row[10] = Employee.get(i).getDepartmentId();
+            model.addRow(row);
+        }
+    }
+
+    public void ShowtableEmployee(String mSearch) {
+        DefaultTableModel model = (DefaultTableModel) tData.getModel();
+        Object[] row = new Object[11];
+        List<Employee> Employee = new ArrayList<>();
+        Employee = iec.search(mSearch);
+        for (int i = 0; i < Employee.size(); i++) {
+            row[0] = Employee.get(i).getId();
+            row[1] = Employee.get(i).getFirstName();
+            row[2] = Employee.get(i).getLastName();
+            row[3] = Employee.get(i).getEmail();
+            row[4] = Employee.get(i).getPhoneNumber();
+            row[5] = Employee.get(i).getHire();
+            row[6] = Employee.get(i).getJobId();
+            row[7] = Employee.get(i).getSalary();
+            row[8] = Employee.get(i).getCommission();
+            row[9] = Employee.get(i).getManagerId();
+            row[10] = Employee.get(i).getDepartmentId();
+            model.addRow(row);
+        }
+    }
+
+    public void updateTableEmployee() {
+        DefaultTableModel defaultTableModel = (DefaultTableModel) tData.getModel();
+        defaultTableModel.setRowCount(0);
+        ShowtableEmployee();
+    }
+
+    public void updateTableEmployee(String mUpdate) {
+        DefaultTableModel defaultTableModel = (DefaultTableModel) tData.getModel();
+        defaultTableModel.setRowCount(0);
+        if (mUpdate == "") {
+            ShowtableEmployee();
+        }
+        ShowtableEmployee(mUpdate);
     }
 
     /**
@@ -46,7 +132,7 @@ public class EmployeeView extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tEmail = new javax.swing.JTextPane();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tSalary = new javax.swing.JTextPane();
+        tTambahan = new javax.swing.JTextPane();
         btnSimpan = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
@@ -57,24 +143,24 @@ public class EmployeeView extends javax.swing.JFrame {
         tData = new javax.swing.JTable();
         label8 = new java.awt.Label();
         jScrollPane12 = new javax.swing.JScrollPane();
-        tFirstName1 = new javax.swing.JTextPane();
+        tLastName = new javax.swing.JTextPane();
         label9 = new java.awt.Label();
         jScrollPane13 = new javax.swing.JScrollPane();
-        tEmail1 = new javax.swing.JTextPane();
+        tTelepon = new javax.swing.JTextPane();
         jScrollPane14 = new javax.swing.JScrollPane();
-        tEmail2 = new javax.swing.JTextPane();
+        tTanggal = new javax.swing.JTextPane();
         label10 = new java.awt.Label();
         jScrollPane15 = new javax.swing.JScrollPane();
-        tEmail3 = new javax.swing.JTextPane();
+        tIDPekerjaan = new javax.swing.JTextPane();
         label12 = new java.awt.Label();
         label11 = new java.awt.Label();
         jScrollPane16 = new javax.swing.JScrollPane();
-        tEmail4 = new javax.swing.JTextPane();
+        tMoney = new javax.swing.JTextPane();
         label13 = new java.awt.Label();
         jScrollPane17 = new javax.swing.JScrollPane();
-        tSalary1 = new javax.swing.JTextPane();
+        tManager = new javax.swing.JTextPane();
         jScrollPane18 = new javax.swing.JScrollPane();
-        tSalary2 = new javax.swing.JTextPane();
+        tDepartment = new javax.swing.JTextPane();
         label14 = new java.awt.Label();
 
         jInternalFrame1.setVisible(true);
@@ -139,14 +225,35 @@ public class EmployeeView extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(tEmail);
 
-        jScrollPane5.setViewportView(tSalary);
+        jScrollPane5.setViewportView(tTambahan);
 
-        btnSimpan.setText("Simpan");
+        btnSimpan.setText("Insert");
+        btnSimpan.setActionCommand("Insert");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
+        tInputCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tInputCariKeyTyped(evt);
+            }
+        });
         jScrollPane8.setViewportView(tInputCari);
 
         btnSearch.setText("Search");
@@ -162,35 +269,40 @@ public class EmployeeView extends javax.swing.JFrame {
                 "Id", "Nama Depan", "Nama Belakang", "Email", "Nomor Telepon", "Tanggal Kerja", "ID Pekerjaan", "Salary", "Komisi", "ID Manager", "ID Department"
             }
         ));
+        tData.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tDataMouseClicked(evt);
+            }
+        });
         jScrollPane11.setViewportView(tData);
 
         label8.setText("Nama Belakang");
 
-        jScrollPane12.setViewportView(tFirstName1);
+        jScrollPane12.setViewportView(tLastName);
 
         label9.setText("Nomor Telepon");
 
-        jScrollPane13.setViewportView(tEmail1);
+        jScrollPane13.setViewportView(tTelepon);
 
-        jScrollPane14.setViewportView(tEmail2);
+        jScrollPane14.setViewportView(tTanggal);
 
         label10.setText("Tanggal Kerja");
 
-        jScrollPane15.setViewportView(tEmail3);
+        jScrollPane15.setViewportView(tIDPekerjaan);
 
-        label12.setText("label12");
+        label12.setText("ID PERKERJAAN");
 
-        label11.setText("label11");
+        label11.setText("KOMISI");
 
-        jScrollPane16.setViewportView(tEmail4);
+        jScrollPane16.setViewportView(tMoney);
 
-        label13.setText("label11");
+        label13.setText("ID MANAGER");
 
-        jScrollPane17.setViewportView(tSalary1);
+        jScrollPane17.setViewportView(tManager);
 
-        jScrollPane18.setViewportView(tSalary2);
+        jScrollPane18.setViewportView(tDepartment);
 
-        label14.setText("label11");
+        label14.setText("ID DEPARTMENT");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -308,28 +420,29 @@ public class EmployeeView extends javax.swing.JFrame {
                         .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(label12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(label11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(label14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)
+                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSimpan)
                             .addComponent(btnUpdate)
-                            .addComponent(btnHapus))))
+                            .addComponent(btnHapus)))
+                    .addComponent(jScrollPane18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,18 +452,79 @@ public class EmployeeView extends javax.swing.JFrame {
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
-        label12.getAccessibleContext().setAccessibleName("ID PEKERJAAN");
+        label12.getAccessibleContext().setAccessibleName("iD departemen");
+        label12.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSimpanAction(java.awt.event.ActionEvent evt){
-        try {
-            
-        } catch (Exception e) {
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(this, "Lakukan update data", "confirm update",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, iec.update(tId.getText(), tFirstName.getText(),
+                    tLastName.getText(), tEmail.getText(), tTelepon.getText(), tTanggal.getText(),
+                    tIDPekerjaan.getText(), tMoney.getText(), tTambahan.getText(), tManager.getText(),
+                    tDepartment.getText()));
+            updateTableEmployee();
+            resetTextEmployee();
         }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    //insert
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        // TODO add your handling code here:\
+        int confirm = JOptionPane.showConfirmDialog(this, "apakah anda yakin melakukan update? ", "confirm update ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, iec.insert(tId.getText(), tFirstName.getText(),
+                    tLastName.getText(), tEmail.getText(), tTelepon.getText(), tTanggal.getText(),
+                    tIDPekerjaan.getText(), tMoney.getText(), tTambahan.getText(), tManager.getText(),
+                    tDepartment.getText()));
+            updateTableEmployee();
+            resetTextEmployee();
+        }
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(this, "apakah anda yakin melakukan delete? ", "confirm delete ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirm == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, iec.delete(tId.getText()));
+            updateTableEmployee();
+            resetTextEmployee();
+        }
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void tInputCariKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tInputCariKeyTyped
+        // TODO add your handling code here:
+        updateTableEmployee(tInputCari.getText());
+    }//GEN-LAST:event_tInputCariKeyTyped
+
+    private void tDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tDataMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tData.getModel();
+        int SelectedRowIndex = tData.getSelectedRow();
+
+        tId.setEditable(false);
+        btnSimpan.setEnabled(false);
+        tId.setText(model.getValueAt(SelectedRowIndex, 0).toString());
+        tFirstName.setText(model.getValueAt(SelectedRowIndex, 1).toString());
+        tLastName.setText(model.getValueAt(SelectedRowIndex, 2).toString());
+        tEmail.setText(model.getValueAt(SelectedRowIndex, 3).toString());
+        tTelepon.setText(model.getValueAt(SelectedRowIndex, 4).toString());
+        tTanggal.setText(model.getValueAt(SelectedRowIndex, 5).toString());
+        tIDPekerjaan.setText(model.getValueAt(SelectedRowIndex, 6).toString());
+        tMoney.setText(model.getValueAt(SelectedRowIndex, 7).toString());
+        tTambahan.setText(model.getValueAt(SelectedRowIndex, 8).toString());
+        tManager.setText(model.getValueAt(SelectedRowIndex, 9).toString());
+        tDepartment.setText(model.getValueAt(SelectedRowIndex, 10).toString());
+    }//GEN-LAST:event_tDataMouseClicked
+
+    private void resetTextEmployee() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -425,17 +599,17 @@ public class EmployeeView extends javax.swing.JFrame {
     private java.awt.Label label8;
     private java.awt.Label label9;
     private javax.swing.JTable tData;
+    private javax.swing.JTextPane tDepartment;
     private javax.swing.JTextPane tEmail;
-    private javax.swing.JTextPane tEmail1;
-    private javax.swing.JTextPane tEmail2;
-    private javax.swing.JTextPane tEmail3;
-    private javax.swing.JTextPane tEmail4;
     private javax.swing.JTextPane tFirstName;
-    private javax.swing.JTextPane tFirstName1;
+    private javax.swing.JTextPane tIDPekerjaan;
     private javax.swing.JTextPane tId;
     private javax.swing.JTextPane tInputCari;
-    private javax.swing.JTextPane tSalary;
-    private javax.swing.JTextPane tSalary1;
-    private javax.swing.JTextPane tSalary2;
+    private javax.swing.JTextPane tLastName;
+    private javax.swing.JTextPane tManager;
+    private javax.swing.JTextPane tMoney;
+    private javax.swing.JTextPane tTambahan;
+    private javax.swing.JTextPane tTanggal;
+    private javax.swing.JTextPane tTelepon;
     // End of variables declaration//GEN-END:variables
 }

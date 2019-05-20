@@ -38,9 +38,9 @@ public class EmployeeController implements IEmployeeController {
     }
 
     @Override
-    public String update(String id, String firstName, String email, String hire, String salary) {
+    public String update(String id, String firstName, String lastName, String email, String phone, String hire, String jobId, String salary, String commission, String managerId, String departmentId) {
         String result = "";
-        Employee employee = new Employee(firstName, Integer.parseInt(id), email, hire, Integer.parseInt(salary));
+        Employee employee = new Employee(Integer.parseInt(id), firstName, lastName, email, phone, hire, jobId, Integer.parseInt(salary), Float.parseFloat(commission), Integer.parseInt(managerId), Integer.parseInt(departmentId));
         if (irdao.update(employee)) {
             result = "Data Berhasil diupdate";
         } else {

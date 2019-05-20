@@ -22,7 +22,7 @@ public interface IEmployeeController {
 
     public String insert(String id, String firstName, String lastName, String email, String phone, String hire, String jobId, String salary, String commission, String managerId, String departmentId);
 
-    public String update(String id, String name, String email, String hire, String salary);
+    public String update(String id, String firstName, String lastName, String email, String phone, String hire, String jobId, String salary, String commission, String managerId, String departmentId);
 
     public String delete(String id);
-}
+   }

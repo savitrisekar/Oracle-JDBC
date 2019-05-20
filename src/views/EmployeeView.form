@@ -243,31 +243,35 @@
                   <Component id="label12" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="jScrollPane16" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane17" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane18" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="label6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="label11" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="label13" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="label13" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane17" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="label14" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnSimpan" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnHapus" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="jScrollPane18" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -352,24 +356,34 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="tSalary">
+        <Component class="javax.swing.JTextPane" name="tTambahan">
         </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="btnSimpan">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Simpan"/>
+        <Property name="text" type="java.lang.String" value="Insert"/>
+        <Property name="actionCommand" type="java.lang.String" value="Insert"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimpanActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnUpdate">
       <Properties>
         <Property name="text" type="java.lang.String" value="Update"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnHapus">
       <Properties>
         <Property name="text" type="java.lang.String" value="Hapus"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHapusActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane8">
       <AuxValues>
@@ -379,6 +393,9 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
         <Component class="javax.swing.JTextPane" name="tInputCari">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tInputCariKeyTyped"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -474,6 +491,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tDataMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -489,7 +509,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="tFirstName1">
+        <Component class="javax.swing.JTextPane" name="tLastName">
         </Component>
       </SubComponents>
     </Container>
@@ -505,7 +525,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="tEmail1">
+        <Component class="javax.swing.JTextPane" name="tTelepon">
         </Component>
       </SubComponents>
     </Container>
@@ -516,7 +536,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="tEmail2">
+        <Component class="javax.swing.JTextPane" name="tTanggal">
         </Component>
       </SubComponents>
     </Container>
@@ -532,21 +552,22 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="tEmail3">
+        <Component class="javax.swing.JTextPane" name="tIDPekerjaan">
         </Component>
       </SubComponents>
     </Container>
     <Component class="java.awt.Label" name="label12">
       <Properties>
-        <Property name="text" type="java.lang.String" value="label12"/>
+        <Property name="text" type="java.lang.String" value="ID PERKERJAAN"/>
       </Properties>
       <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="ID PEKERJAAN"/>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="iD departemen"/>
+        <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
       </AccessibilityProperties>
     </Component>
     <Component class="java.awt.Label" name="label11">
       <Properties>
-        <Property name="text" type="java.lang.String" value="label11"/>
+        <Property name="text" type="java.lang.String" value="KOMISI"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane16">
@@ -556,13 +577,13 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="tEmail4">
+        <Component class="javax.swing.JTextPane" name="tMoney">
         </Component>
       </SubComponents>
     </Container>
     <Component class="java.awt.Label" name="label13">
       <Properties>
-        <Property name="text" type="java.lang.String" value="label11"/>
+        <Property name="text" type="java.lang.String" value="ID MANAGER"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane17">
@@ -572,7 +593,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="tSalary1">
+        <Component class="javax.swing.JTextPane" name="tManager">
         </Component>
       </SubComponents>
     </Container>
@@ -583,13 +604,13 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="tSalary2">
+        <Component class="javax.swing.JTextPane" name="tDepartment">
         </Component>
       </SubComponents>
     </Container>
     <Component class="java.awt.Label" name="label14">
       <Properties>
-        <Property name="text" type="java.lang.String" value="label11"/>
+        <Property name="text" type="java.lang.String" value="ID DEPARTMENT"/>
       </Properties>
     </Component>
   </SubComponents>
