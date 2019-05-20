@@ -33,24 +33,15 @@ public class EmployeeDAO implements IEmployeeDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
-                        resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getInt(8),
-                        resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11));
-                employee.setId(resultSet.getInt(1));
-                employee.setFirstName(resultSet.getString(2));
-                employee.setLastName(resultSet.getString(3));
-                employee.setEmail(resultSet.getString(4));
-                employee.setPhoneNumber(resultSet.getString(5));
-                employee.setHire(resultSet.getString(6));
-                employee.setJobId(resultSet.getString(7));
-                employee.setSalary(resultSet.getInt(8));
-                employee.setCommission(resultSet.getFloat(9));
-                employee.setManagerId(resultSet.getInt(10));
-                employee.setDepartmentId(resultSet.getInt(11));
-                listEmployee.add(employee);
+//                Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
+//                        resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getInt(8),
+//                        resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11));
+                listEmployee.add(new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7),
+                        resultSet.getInt(8), resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11)));
             }
         } catch (Exception e) {
-            e.getStackTrace();
+            e.getStackTrace(); //menampilkan error di console
         }
         return listEmployee;
     }
@@ -63,21 +54,12 @@ public class EmployeeDAO implements IEmployeeDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
-                        resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getInt(8),
-                        resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11));
-                employee.setId(resultSet.getInt(1));
-                employee.setFirstName(resultSet.getString(2));
-                employee.setLastName(resultSet.getString(3));
-                employee.setEmail(resultSet.getString(4));
-                employee.setPhoneNumber(resultSet.getString(5));
-                employee.setHire(resultSet.getString(6));
-                employee.setJobId(resultSet.getString(7));
-                employee.setSalary(resultSet.getInt(8));
-                employee.setCommission(resultSet.getFloat(9));
-                employee.setManagerId(resultSet.getInt(10));
-                employee.setDepartmentId(resultSet.getInt(11));
-                listEmployee.add(employee);
+//                Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
+//                        resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getInt(8),
+//                        resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11));
+                listEmployee.add(new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7),
+                        resultSet.getInt(8), resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11)));
             }
         } catch (Exception e) {
             e.getStackTrace();
@@ -88,20 +70,24 @@ public class EmployeeDAO implements IEmployeeDAO {
     @Override
     public List<Employee> search(String key) {
         List<Employee> listEmployee = new ArrayList<Employee>();
-        String query = "SELECT * FROM EMPLOYEES WHERE first_name LIKE (?) OR employee_id LIKE (?) "
-                + "OR email LIKE (?) OR hire_date LIKE (?) OR salary LIKE (?)";
+        String query = "SELECT * FROM EMPLOYEES WHERE  LIKE employee_id (?) OR first_name LIKE (?) OR last_name LIKE (?) "
+                + "OR email LIKE (?) OR phone_number (?) OR hire_date LIKE (?) OR salary LIKE (?) OR commission_pct LIKE (?) OR manager_id LIKE (?) OR department_id LIKE (?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, "%" + key + "%");
+            preparedStatement.setInt(1, "%" + key + "%");
             preparedStatement.setString(2, "%" + key + "%");
             preparedStatement.setString(3, "%" + key + "%");
             preparedStatement.setString(4, "%" + key + "%");
-            preparedStatement.setString(5, "%" + key + "%");
+            preparedStatement.setString(6, "%" + key + "%");
+            preparedStatement.setString(7, "%" + key + "%");
+            preparedStatement.setString(8, "%" + key + "%");
+            preparedStatement.setString(9, "%" + key + "%");
+            preparedStatement.setString(10, "%" + key + "%");
+            preparedStatement.setString(11, "%" + key + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Employee employee = new Employee(resultSet.getString(1), resultSet.getInt("2"),
-                        resultSet.getString("3"), resultSet.getString("4"), resultSet.getInt("5"));
-                listEmployee.add(employee);
+                listEmployee.add(new Employee(resultSet.getString(1), resultSet.getInt("2"),
+                        resultSet.getString("3"), resultSet.getString("4"), resultSet.getInt("5")));
             }
         } catch (Exception e) {
             e.getStackTrace();
@@ -113,7 +99,7 @@ public class EmployeeDAO implements IEmployeeDAO {
     public boolean insert(Employee employee) {
         boolean result = false;
         String query = "INSERT INTO EMPLOYEES(employee_id, first_name, last_name, email, phone_number, hire_date, job_id, "
-                + "salary, commission_pct, manager_id, departmen_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                + "salary, commission_pct, manager_id, department_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -139,14 +125,21 @@ public class EmployeeDAO implements IEmployeeDAO {
     @Override
     public boolean update(Employee employee) {
         boolean result = false;
-        String query = "UPDATE EMPLOYEES SET first_name = ?, email = ?, hire_date = ?, salary = ? + WHERE employee_id = ?";
+        String query = "UPDATE EMPLOYEES SET first_name = ?, last_name = ? email = ?, phone_number = ?, "
+                + "hire_date = ?, job_id = ?, salary = ?, commission_pct = ?, manager_id = ?, departmen_id = ? WHERE employee_id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, employee.getId());
             preparedStatement.setString(2, employee.getFirstName());
-            preparedStatement.setString(3, employee.getEmail());
-            preparedStatement.setString(4, employee.getHire());
-            preparedStatement.setInt(5, employee.getSalary());
+            preparedStatement.setString(3, employee.getLastName());
+            preparedStatement.setString(4, employee.getEmail());
+            preparedStatement.setString(5, employee.getPhoneNumber());
+            preparedStatement.setString(6, employee.getHire());
+            preparedStatement.setString(7, employee.getJobId());
+            preparedStatement.setInt(8, employee.getSalary());
+            preparedStatement.setFloat(9, employee.getCommission());
+            preparedStatement.setInt(10, employee.getManagerId());
+            preparedStatement.setInt(11, employee.getDepartmentId());
             preparedStatement.execute();
             result = true;
         } catch (Exception e) {
@@ -163,9 +156,9 @@ public class EmployeeDAO implements IEmployeeDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
-                        resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), resultSet.getInt(8),
-                        resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11));
+                Employee employee = new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), 
+                        resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7), 
+                        resultSet.getInt(8), resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11));
                 employee.setId(resultSet.getInt(1));
                 employee.setFirstName(resultSet.getString(2));
                 employee.setLastName(resultSet.getString(3));
