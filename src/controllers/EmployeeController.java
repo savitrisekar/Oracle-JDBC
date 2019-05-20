@@ -38,21 +38,9 @@ public class EmployeeController implements IEmployeeController {
     }
 
     @Override
-    public String insert(String id, String name, String email, String hire, String salary) {
+    public String update(String id, String firstName, String email, String hire, String salary) {
         String result = "";
-        Employee employee = new Employee(Integer.parseInt(id), name, email, hire, salary);
-        if (irdao.insert(employee)) {
-            result = "Data Berhasil disimpan";
-        } else {
-            result = "Data Gagal disimpan";
-        }
-        return result;
-    }
-
-    @Override
-    public String update(String id, String name, String email, String hire, String salary) {
-        String result = "";
-       Employee employee = new Employee(Integer.parseInt(id), name, email, hire, salary);
+        Employee employee = new Employee(firstName, Integer.parseInt(id), email, hire, Integer.parseInt(salary));
         if (irdao.update(employee)) {
             result = "Data Berhasil diupdate";
         } else {
@@ -68,6 +56,18 @@ public class EmployeeController implements IEmployeeController {
             result = "Data Berhasil dihapus";
         } else {
             result = "Data Gagal dihapus";
+        }
+        return result;
+    }
+
+    @Override
+    public String insert(String id, String firstName, String lastName, String email, String phone, String hire, String jobId, String salary, String commission, String managerId, String departmentId) {
+        String result = "";
+        Employee employee = new Employee(Integer.parseInt(id), firstName, lastName, email, phone, hire, jobId, Integer.parseInt(salary), Float.parseFloat(commission), Integer.parseInt(managerId), Integer.parseInt(departmentId));
+        if (irdao.insert(employee)) {
+            result = "Data Berhasil disimpan";
+        } else {
+            result = "Data Gagal disimpan";
         }
         return result;
     }

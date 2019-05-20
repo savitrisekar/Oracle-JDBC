@@ -38,8 +38,8 @@ public class OJDB {
 
         //manual test dao insert
         IEmployeeDAO irdao = new EmployeeDAO(connection.getConnection());
-        Employee employee1 = new Employee(31, "My Employee", "employee@gmail.com", "10/05/2019", "3500000");
-        System.out.println(irdao.insert(employee1));
+        //Employee employee1 = new Employee(31, "My Employee", "employee@gmail.com", "10/05/2019", "3500000");
+        //System.out.println(irdao.insert(employee1));
 
         //manual test getAll
 //        IEmployeeDAO mIrdao = new EmployeeDAO(connection.getConnection());
