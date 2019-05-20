@@ -74,20 +74,21 @@ public class EmployeeDAO implements IEmployeeDAO {
                 + "OR email LIKE (?) OR phone_number (?) OR hire_date LIKE (?) OR salary LIKE (?) OR commission_pct LIKE (?) OR manager_id LIKE (?) OR department_id LIKE (?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, "%" + key + "%");
-            preparedStatement.setString(2, "%" + key + "%");
-            preparedStatement.setString(3, "%" + key + "%");
-            preparedStatement.setString(4, "%" + key + "%");
-            preparedStatement.setString(6, "%" + key + "%");
-            preparedStatement.setString(7, "%" + key + "%");
-            preparedStatement.setString(8, "%" + key + "%");
-            preparedStatement.setString(9, "%" + key + "%");
-            preparedStatement.setString(10, "%" + key + "%");
-            preparedStatement.setString(11, "%" + key + "%");
+            preparedStatement.setString(1, "%"+key+"%");
+            preparedStatement.setString(2, "%"+key+"%");
+            preparedStatement.setString(3, "%"+key+"%");
+            preparedStatement.setString(4, "%"+key+"%");
+            preparedStatement.setString(6, "%"+key+"%");
+            preparedStatement.setString(7, "%"+key+"%");
+            preparedStatement.setString(8, "%"+key+"%");
+            preparedStatement.setString(9, "%"+key+"%");
+            preparedStatement.setString(10, "%"+key+"%");
+            preparedStatement.setString(11, "%"+key+"%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                listEmployee.add(new Employee(resultSet.getString(1), resultSet.getInt("2"),
-                        resultSet.getString("3"), resultSet.getString("4"), resultSet.getInt("5")));
+                listEmployee.add(new Employee(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7),
+                        resultSet.getInt(8), resultSet.getFloat(9), resultSet.getInt(10), resultSet.getInt(11)));
             }
         } catch (Exception e) {
             e.getStackTrace();

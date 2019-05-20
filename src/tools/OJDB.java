@@ -40,6 +40,14 @@ public class OJDB {
         IEmployeeDAO irdao = new EmployeeDAO(connection.getConnection());
         //Employee employee1 = new Employee(31, "My Employee", "employee@gmail.com", "10/05/2019", "3500000");
         //System.out.println(irdao.insert(employee1));
+        IEmployeeDAO mIrdao = new EmployeeDAO(connection.getConnection());
+        for (Employee employee2 : mIrdao.search("A")) {
+            System.out.println(employee2.getId());
+            System.out.println(employee2.getFirstName());
+            System.out.println(employee2.getEmail());
+            System.out.println(employee2.getHire());
+            System.out.println(employee2.getSalary());
+        }
 
         //manual test getAll
 //        IEmployeeDAO mIrdao = new EmployeeDAO(connection.getConnection());
